@@ -1,0 +1,4 @@
+deta
+ulid-py
+fastapi
+pydantic

