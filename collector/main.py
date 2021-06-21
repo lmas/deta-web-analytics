@@ -20,20 +20,22 @@ async def root():
     return {"message": "hello world"}
 
 class Payload(BaseModel):
-    ts: int
+    ti: int
     tz: str
     ua: str
-    ref: str
-    url: str
+    re: str
+    ho: str
+    pa: str
 
-@app.post("/post")
+@app.post("/")
 async def post(payload: Payload):
     record = {
-            "key": ulid.from_timestamp(payload.ts).str,
+            "key": ulid.from_timestamp(payload.ti).str,
             "timezone": payload.tz,
             "useragent": payload.ua,
-            "referrer": payload.ref,
-            "url": payload.url,
+            "referrer": payload.re,
+            "host": payload.ho,
+            "path": payload.pa,
     }
     db = deta.Base("requests")
     db.put(record)

@@ -6,11 +6,12 @@ function postJSON(url, data) {
         xhr.send(JSON.stringify(data));
 }
 var data = {
-        ts: Math.round(Date.now() / 1000),
+        ti: Math.round(Date.now() / 1000),
         tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
         ua: window.navigator.userAgent,
-        ref: document.referrer,
-        url: [location.protocol, '//', location.host, location.pathname].join(''),
+        re: document.referrer,
+        ho: location.host,
+        pa: location.pathname,
 };
 console.log(JSON.stringify(data));
 postJSON("https://s0rvs5.deta.dev/", data);
