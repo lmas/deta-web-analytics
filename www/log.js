@@ -6,7 +6,6 @@ function postJSON(url, data) {
         xhr.send(JSON.stringify(data));
 }
 var data = {
-        ti: Math.round(Date.now() / 1000),
         tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
         ua: window.navigator.userAgent,
         re: document.referrer,

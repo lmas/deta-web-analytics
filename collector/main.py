@@ -1,9 +1,9 @@
 
-import ulid
 from deta import Deta
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from datetime import datetime, timezone
 
 deta = Deta() # project key is set automagically inside deta micros
 app = FastAPI()
@@ -20,7 +20,6 @@ async def root():
     return {"message": "hello world"}
 
 class Payload(BaseModel):
-    ti: int
     tz: str
     ua: str
     re: str
@@ -30,7 +29,7 @@ class Payload(BaseModel):
 @app.post("/")
 async def post(payload: Payload):
     record = {
-            "key": ulid.from_timestamp(payload.ti).str,
+            "timestamp": int(datetime.now(timezone.utc).timestamp()),
             "timezone": payload.tz,
             "useragent": payload.ua,
             "referrer": payload.re,
