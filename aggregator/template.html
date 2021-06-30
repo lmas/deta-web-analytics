@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link href="style.css" rel="stylesheet" type="text/css"> -->
+        <title>Visits for {{.Host}}</title>
+        <style type="text/css">
+* {
+        margin: 0;
+        padding: 0;
+}
+:root {
+        --spacing: 1rem;
+        --width: 960px;
+
+        font-family: "sans-serif";
+        font-size: 16px;
+        line-height: 1.5;
+}
+body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+}
+header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: var(--spacing);
+}
+main {
+        margin: 0 auto auto auto;
+        padding: var(--spacing);
+        max-width: calc(var(--width) - var(--spacing) * 2);
+}
+footer {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.75rem;
+        padding: var(--spacing);
+        align-items: center;
+}
+svg text {
+        font-size: 0.75rem;
+}
+.plot-yaxis line {
+        stroke: #cccccc;
+        stroke-width: 1;
+}
+.plot-yaxis text {
+        dominant-baseline: central;
+}
+.plot-views-bars rect, .plot-views-legend {
+        fill: #0099ff;
+        stroke: #6161ff;
+        stroke-width: 0;
+}
+.plot-visits-bars rect, .plot-visits-legend {
+        fill: #ff6600;
+        stroke: #29fb71;
+        stroke-width: 0;
+}
+ul {
+        list-style-type: none;
+}
+li {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0.25rem;
+}
+.list-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin: var(--spacing) 0;
+}
+.list-head {
+        text-align: center;
+}
+.list-hits {
+        min-width: 2rem;
+        text-align: center;
+}
+.small {
+        font-size: 0.75rem;
+}
+        </style>
+</head>
+<body>
+        <header>
+                <h1>Visits for {{.Host}}</h1>
+                <p>
+                        Last updated on {{.Timestamp.Format "2006-01-02"}}
+                </p>
+        </header>
+        <main>
+                <svg width="960" height="200">
+                        <g class="plot-yaxis">
+                                {{range .ViewsPerDay.YLabels 200 14}}
+                                <g>
+                                        <text x="0" y="{{.Y}}">{{.Value}}</text>
+                                        <line x1="32" y1="{{.Y}}" x2="100%" y2="{{.Y}}" stroke="black" />
+                                </g>
+                                {{end}}
+                        </g>
+                        <g class="plot-views-bars">
+                                {{range .ViewsPerDay.Normalize 960 200 37 14 .ViewsPerDay.Max}}
+                                <g>
+                                        <rect class="plot-views" width="32" height="{{.Height}}" x="{{.X}}" y="{{.Y}}" />
+                                        <title>{{.Hits}} views</title>
+                                        <text x="{{.X}}" y="99%">{{.Key}}</text>
+                                </g>
+                                {{end}}
+                        </g>
+                        <g class="plot-visits-bars">
+                                {{range .VisitsPerDay.Normalize 960 200 53 14 .ViewsPerDay.Max}}
+                                <g>
+                                        <rect class="plot-visits" width="32" height="{{.Height}}" x="{{.X}}" y="{{.Y}}" />
+                                        <title>{{.Hits}} visits</title>
+                                </g>
+                                {{end}}
+                        </g>
+                        <g class="plot-legend">
+                                <rect class="plot-views-legend" width="10" height="10" x="90%" y="15" />
+                                <text x="92%" y="24">Views: {{.ViewsPerDay.Hits}}</text>
+                                <rect class="plot-visits-legend" width="10" height="10" x="90%" y="27" />
+                                <text x="92%" y="36">Visits: {{.VisitsPerDay.Hits}}</text>
+                        </g>
+                </svg>
+                <div class="list-container">
+                        <div>
+                                <h2 class="list-head">Pages</h2>
+                                <ul>
+                                        {{range .Pages.ItemsByHits | limit 10}}
+                                        <li><span class="list-hits">{{.Hits}}</span> {{.Key}}</li>
+                                        {{end}}
+                                </ul>
+                        </div>
+                        <div>
+                                <h2 class="list-head">Referrers</h2>
+                                <ul>
+                                        {{range .Referrers.ItemsByHits | limit 10}}
+                                        <li><span class="list-hits">{{.Hits}}</span> {{.Key}}</li>
+                                        {{end}}
+                                </ul>
+                        </div>
+                        <div>
+                                <h2 class="list-head">Browsers</h2>
+                                <ul>
+                                        {{range .Browsers.ItemsByHits | limit 10}}
+                                        <li><span class="list-hits">{{.Hits}}</span> {{.Key}}</li>
+                                        {{end}}
+                                </ul>
+                        </div>
+                        <div>
+                                <h2 class="list-head">Time Zones</h2>
+                                <ul>
+                                        {{range .Timezones.ItemsByHits | limit 10}}
+                                        <li><span class="list-hits">{{.Hits}}</span> {{.Key}}</li>
+                                        {{end}}
+                                </ul>
+                        </div>
+                </div>
+                <h2>Robots</h2>
+                <ul class="small">
+                        {{range .Bots.ItemsByHits}}
+                        <li><span class="list-hits">{{.Hits}}</span> {{.Key}}</li>
+                        {{end}}
+                </ul>
+        </main>
+        <footer>
+                <p>Generated with <a href="">deta-web-analytics</a> in {{.Duration}}</p>
+        </footer>
+</body>
+</html>

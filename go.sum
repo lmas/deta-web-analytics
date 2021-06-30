@@ -1,0 +1,6 @@
+github.com/deta/deta-go v0.1.0 h1:tE6wMNjNRy9a+tyxqiqAh6ceX8JwXowsxEROuXS+ScI=
+github.com/deta/deta-go v0.1.0/go.mod h1:vbQaUT8iD6xREm816eNp7Nw1aewd95dpcb/uj0T2vuY=
+zgo.at/gadget v0.0.0-20210225052028-befd29935cb7 h1:OzMJ2EHOk7Qzl0YAZSq+GYk33XhjpMjbcBMTrkQ8xrk=
+zgo.at/gadget v0.0.0-20210225052028-befd29935cb7/go.mod h1:1x0AKFOjKScVTzJh+V69Ku6hTwvEM56MlnKOtrjMwSo=
+zgo.at/isbot v0.0.0-20210512054941-d1f89ea37986 h1:AmCXNV8YQTYoAW+ygxJZxNb3Fm4D1moLU/txLqyyBYQ=
+zgo.at/isbot v0.0.0-20210512054941-d1f89ea37986/go.mod h1:/w+LTWbHsV7G5fT41VnwM0kTdk1H/prynfMqaxcBWjA=
