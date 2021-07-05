@@ -12,7 +12,7 @@ function postJSON(url, data) {
         xhr.send(JSON.stringify(data));
 }
 
-postJSON("https://s0rvs5.deta.dev/ping", {
+postJSON("https://stats.larus.se/ping", {
         tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
         ua: window.navigator.userAgent,
         re: document.referrer,
